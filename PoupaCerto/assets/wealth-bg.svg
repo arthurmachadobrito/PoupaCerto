@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e1a;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#0f1729;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0a0e1a;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <linearGradient id="dollarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#047857"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="coinGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1440" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="100" x2="1440" y2="100" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="0" y1="200" x2="1440" y2="200" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="0" y1="300" x2="1440" y2="300" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="0" y1="400" x2="1440" y2="400" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="0" y1="500" x2="1440" y2="500" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="0" y1="600" x2="1440" y2="600" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="0" y1="700" x2="1440" y2="700" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="0" y1="800" x2="1440" y2="800" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="100" y1="0" x2="100" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="200" y1="0" x2="200" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="300" y1="0" x2="300" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="400" y1="0" x2="400" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="500" y1="0" x2="500" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="700" y1="0" x2="700" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="800" y1="0" x2="800" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="900" y1="0" x2="900" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="1000" y1="0" x2="1000" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="1100" y1="0" x2="1100" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="1200" y1="0" x2="1200" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="1300" y1="0" x2="1300" y2="900" stroke="#10b981" stroke-width="0.5"/>
+    <line x1="1400" y1="0" x2="1400" y2="900" stroke="#10b981" stroke-width="0.5"/>
+  </g>
+
+  <!-- Glowing orbs -->
+  <circle cx="200" cy="200" r="250" fill="url(#glow1)"/>
+  <circle cx="1200" cy="600" r="300" fill="url(#glow2)"/>
+  <circle cx="720" cy="450" r="200" fill="url(#glow1)" opacity="0.5"/>
+
+  <!-- Chart line going up (abstract wealth graph) -->
+  <g opacity="0.15">
+    <polyline points="0,700 100,620 220,650 340,500 460,520 580,380 700,400 820,250 940,280 1060,150 1180,180 1300,80 1440,100" fill="none" stroke="#10b981" stroke-width="3"/>
+    <polyline points="0,750 120,680 240,710 360,560 480,580 600,450 720,470 840,330 960,360 1080,220 1200,250 1320,130 1440,160" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <!-- Stacked Coins - Group 1 (left) -->
+  <g filter="url(#coinGlow)" opacity="0.9">
+    <!-- Coin stack 1 -->
+    <ellipse cx="280" cy="650" rx="28" ry="10" fill="url(#goldGrad)" stroke="#b45309" stroke-width="1"/>
+    <rect x="252" y="640" width="56" height="10" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="280" cy="640" rx="28" ry="10" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+    <rect x="252" y="630" width="56" height="10" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="280" cy="630" rx="28" ry="10" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+    <rect x="252" y="620" width="56" height="10" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="280" cy="620" rx="28" ry="10" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+    <!-- $ sign on top coin -->
+    <text x="280" y="624" text-anchor="middle" fill="#b45309" font-size="12" font-weight="bold">$</text>
+  </g>
+
+  <!-- Coin stack 2 (right side) -->
+  <g filter="url(#coinGlow)" opacity="0.7">
+    <ellipse cx="1150" cy="580" rx="24" ry="9" fill="url(#goldGrad)" stroke="#b45309" stroke-width="1"/>
+    <rect x="1126" y="571" width="48" height="9" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="1150" cy="571" rx="24" ry="9" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+    <rect x="1126" y="563" width="48" height="9" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="1150" cy="563" rx="24" ry="9" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+    <rect x="1126" y="555" width="48" height="9" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="1150" cy="555" rx="24" ry="9" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+  </g>
+
+  <!-- Dollar Bills scattered -->
+  <g filter="url(#coinGlow)" opacity="0.85">
+    <!-- Bill 1 -->
+    <rect x="380" y="550" width="100" height="50" rx="4" fill="url(#dollarGrad)" transform="rotate(-15, 430, 575)" stroke="#065f46" stroke-width="1"/>
+    <rect x="384" y="554" width="92" height="42" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5" transform="rotate(-15, 430, 575)"/>
+    <circle cx="430" cy="575" r="14" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" transform="rotate(-15, 430, 575)"/>
+    <text x="430" y="580" text-anchor="middle" fill="white" font-size="16" font-weight="bold" transform="rotate(-15, 430, 575)">$</text>
+
+    <!-- Bill 2 -->
+    <rect x="920" y="480" width="100" height="50" rx="4" fill="url(#dollarGrad)" transform="rotate(20, 970, 505)" stroke="#065f46" stroke-width="1"/>
+    <rect x="924" y="484" width="92" height="42" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5" transform="rotate(20, 970, 505)"/>
+    <circle cx="970" cy="505" r="14" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" transform="rotate(20, 970, 505)"/>
+    <text x="970" y="510" text-anchor="middle" fill="white" font-size="16" font-weight="bold" transform="rotate(20, 970, 505)">$</text>
+
+    <!-- Bill 3 -->
+    <rect x="600" y="680" width="100" height="50" rx="4" fill="url(#dollarGrad)" transform="rotate(-5, 650, 705)" stroke="#065f46" stroke-width="1"/>
+    <rect x="604" y="684" width="92" height="42" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5" transform="rotate(-5, 650, 705)"/>
+    <circle cx="650" cy="705" r="14" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" transform="rotate(-5, 650, 705)"/>
+    <text x="650" y="710" text-anchor="middle" fill="white" font-size="16" font-weight="bold" transform="rotate(-5, 650, 705)">$</text>
+
+    <!-- Bill 4 - small/background -->
+    <rect x="150" y="450" width="80" height="40" rx="3" fill="url(#dollarGrad)" transform="rotate(35, 190, 470)" stroke="#065f46" stroke-width="0.5" opacity="0.5"/>
+    <text x="190" y="475" text-anchor="middle" fill="white" font-size="13" font-weight="bold" transform="rotate(35, 190, 470)">$</text>
+
+    <!-- Bill 5 - small/background -->
+    <rect x="1250" y="400" width="80" height="40" rx="3" fill="url(#dollarGrad)" transform="rotate(-25, 1290, 420)" stroke="#065f46" stroke-width="0.5" opacity="0.4"/>
+    <text x="1290" y="425" text-anchor="middle" fill="white" font-size="13" font-weight="bold" transform="rotate(-25, 1290, 420)">$</text>
+  </g>
+
+  <!-- Scattered gold coins on ground -->
+  <g opacity="0.6">
+    <ellipse cx="450" cy="720" rx="12" ry="5" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="470" cy="735" rx="10" ry="4" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="490" cy="725" rx="11" ry="4.5" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="520" cy="740" rx="9" ry="3.5" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="850" cy="700" rx="10" ry="4" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="870" cy="715" rx="11" ry="4.5" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+    <ellipse cx="890" cy="705" rx="9" ry="3.5" fill="url(#goldGrad)" stroke="#b45309" stroke-width="0.5"/>
+  </g>
+
+  <!-- Rising arrows (stock market up) -->
+  <g opacity="0.12" stroke="#10b981" stroke-width="2" fill="none">
+    <polyline points="1200,350 1220,300 1240,320 1260,260 1280,280 1300,200"/>
+    <polygon points="1295,210 1300,200 1305,210" fill="#10b981" stroke="none"/>
+    <polyline points="100,300 120,250 140,270 160,220 180,240 200,180"/>
+    <polygon points="195,190 200,180 205,190" fill="#10b981" stroke="none"/>
+  </g>
+
+  <!-- Sparkle effects -->
+  <g opacity="0.4">
+    <text x="320" y="500" fill="#fbbf24" font-size="14">✦</text>
+    <text x="1050" y="420" fill="#fbbf24" font-size="10">✦</text>
+    <text x="700" y="380" fill="#34d399" font-size="12">✦</text>
+    <text x="500" y="480" fill="#fbbf24" font-size="8">✦</text>
+    <text x="1300" y="320" fill="#34d399" font-size="11">✦</text>
+  </g>
+
+  <!-- Vault door hint -->
+  <g opacity="0.06">
+    <circle cx="720" cy="300" r="60" fill="none" stroke="#10b981" stroke-width="3"/>
+    <circle cx="720" cy="300" r="45" fill="none" stroke="#10b981" stroke-width="1.5"/>
+    <line x1="720" y1="240" x2="720" y2="360" stroke="#10b981" stroke-width="2"/>
+    <line x1="660" y1="300" x2="780" y2="300" stroke="#10b981" stroke-width="2"/>
+    <circle cx="720" cy="300" r="8" fill="none" stroke="#10b981" stroke-width="2"/>
+  </g>
+
+  <!-- Decorative corner elements -->
+  <g opacity="0.08" fill="#10b981">
+    <path d="M0,0 L40,0 L40,5 L5,5 L5,40 L0,40 Z"/>
+    <path d="M1440,0 L1400,0 L1400,5 L1435,5 L1435,40 L1440,40 Z"/>
+    <path d="M0,900 L40,900 L40,895 L5,895 L5,860 L0,860 Z"/>
+    <path d="M1440,900 L1400,900 L1400,895 L1435,895 L1435,860 L1440,860 Z"/>
+  </g>
+</svg>

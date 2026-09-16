@@ -1,0 +1,932 @@
+<!DOCTYPE html> <!--declaração do HTML5-->
+<html lang="pt-BR"> <!--define o idioma como português do Brasil-->
+<head> <!--metadados da página-->
+  <meta charset="UTF-8" /> <!--define a codificação de caracteres como UTF-8(padrão de codificação de caracteres mais comum)-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!--define a viewport para dispositivos móveis, garantindo que a página seja exibida corretamente em diferentes tamanhos de tela-->
+  <title>PoupaCerto – Dashboard Financeiro</title> <!--define o título da página-->
+  <meta name="description" content="Gerencie suas finanças pessoais com dashboards interativos" /> <!--define a descrição da página-->
+  <link rel="manifest" href="manifest.json" /> <!--link para o arquivo de manifesto da aplicação web progressiva (PWA)-->
+  <meta name="theme-color" content="#0f0f23" /> <!--define a cor primária do tema da página-->
+  <meta name="apple-mobile-web-app-capable" content="yes" /> <!--indica que a aplicação é compatível com o modo de tela cheia em dispositivos Apple-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> <!--define o estilo da barra de status em dispositivos Apple-->
+  <meta name="apple-mobile-web-app-title" content="PoupaCerto" /> <!--define o título da aplicação em dispositivos Apple-->
+  <meta name="application-name" content="PoupaCerto" /> <!--define o nome da aplicação-->
+  <meta name="mobile-web-app-capable" content="yes" /> <!--indica que a aplicação é compatível com o modo de tela cheia em dispositivos móveis-->
+  <link rel="apple-touch-icon" href="icons/icon-192.png" /> <!--define o ícone da aplicação para dispositivos Apple-->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" /> <!--define o ícone da aplicação para dispositivos móveis-->
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" /> <!--define o ícone da aplicação para dispositivos móveis-->
+  <link rel="preconnect" href="https://fonts.googleapis.com" /> <!--indica que o navegador deve estabelecer uma conexão prévia com o domínio dos fontes-->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> <!--link para a fonte "Inter" do Google Fonts-->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script> <!--link para a biblioteca Chart.js-->
+
+  <link rel="stylesheet" href="style.css" /> <!--link para o arquivo de estilo CSS da página-->
+</head> <!--fim da seção de metadados-->
+
+<body> <!--corpo da página-->
+
+
+  <!-- ════════════════════════════════════════════════════════════
+       LOGIN / REGISTER SCREEN
+       ════════════════════════════════════════════════════════════ -->
+  <div class="login-screen" id="loginScreen"> <!--tela de login e registro-->
+    <!-- Animated wealth background --> 
+    <div class="login-bg" id="loginBg"></div> <!--fundo animado da tela de login-->
+
+    <div class="login-card"> <!--card de login e registro-->
+      <div class="login-card-inner"> <!--corpo do card de login e registro-->
+        <div class="login-logo-wrap"> <!--logo e título da página-->
+          <div class="login-logo">💰</div> <!--icone da logo-->
+          <h1>PoupaCerto</h1> <!--título da página-->
+        </div> <!--fim da logo e título-->
+
+        <p class="login-subtitle">Seu futuro financeiro começa aqui</p> <!--subtítulo da página-->
+
+
+        <!-- Tab switcher -->
+        <div class="login-tabs"> 
+          <button class="login-tab active" id="loginTabBtn" onclick="showLoginForm()">Entrar</button>
+          <button class="login-tab" id="registerTabBtn" onclick="showRegisterForm()">Criar Conta</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="login-form" style="display:flex">
+          <div class="form-group">
+            <label for="loginEmail">E-mail</label>
+            <input type="email" id="loginEmail" placeholder="seu@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Senha</label>
+            <input type="password" id="loginPassword" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="btn-primary login-btn">Entrar</button>
+          <p class="login-hint" id="loginHint">Ainda não tem conta? <a href="#" onclick="showRegisterForm();return false">Criar agora</a></p>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="registerForm" class="login-form" style="display:none">
+          <div class="form-group">
+            <label for="regName">Nome</label>
+            <input type="text" id="regName" placeholder="Seu nome completo" required />
+          </div>
+          <div class="form-group">
+            <label for="regEmail">E-mail</label>
+            <input type="email" id="regEmail" placeholder="seu@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Senha</label>
+            <input type="password" id="regPassword" placeholder="Mínimo 6 caracteres" minlength="6" required />
+          </div>
+          <div class="form-group">
+            <label for="regConfirm">Confirmar Senha</label>
+            <input type="password" id="regConfirm" placeholder="Repita a senha" required />
+          </div>
+          <button type="submit" class="btn-primary login-btn">Criar Conta</button>
+          <p class="login-hint">Já tem conta? <a href="#" onclick="showLoginForm();return false">Entrar</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN APP
+       ════════════════════════════════════════════════════════════ -->
+  <div class="app-container" id="appContainer" style="display:none">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">💰</div>
+        <span class="logo-text">PoupaCerto</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="overview">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Visão Geral</span>
+        </button>
+        <button class="nav-item" data-tab="weekly">
+          <span class="nav-icon">📅</span>
+          <span class="nav-label">Análise Semanal</span>
+        </button>
+        <button class="nav-item" data-tab="annual">
+          <span class="nav-icon">📆</span>
+          <span class="nav-label">Análise Anual</span>
+        </button>
+        <button class="nav-item" data-tab="income">
+          <span class="nav-icon">💵</span>
+          <span class="nav-label">Recebimentos</span>
+        </button>
+        <button class="nav-item" data-tab="expenses">
+          <span class="nav-icon">💸</span>
+          <span class="nav-label">Gastos</span>
+        </button>
+        <button class="nav-item" data-tab="balance">
+          <span class="nav-icon">⚖️</span>
+          <span class="nav-label">Balanço</span>
+        </button>
+        <button class="nav-item" data-tab="history">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Histórico</span>
+        </button>
+        <button class="nav-item" data-tab="budget">
+          <span class="nav-icon">🎯</span>
+          <span class="nav-label">Metas</span>
+        </button>
+        <button class="nav-item" data-tab="card">
+          <span class="nav-icon">💳</span>
+          <span class="nav-label">Cartão</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn-add-data" id="openModalBtn">
+          <span>+</span> Adicionar Dados
+        </button>
+        <div class="sidebar-actions">
+          <button class="btn-icon" id="importCsvBtn" title="Importar CSV">📥</button>
+          <button class="btn-icon theme-toggle" id="themeToggle" title="Alternar tema">🌙</button>
+          <button class="btn-icon" id="logoutBtn" title="Sair">🚪</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- SIDEBAR OVERLAY (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" id="hamburger">☰</button>
+          <div class="topbar-title" id="topbarTitle">Visão Geral</div>
+        </div>
+        <div class="topbar-right">
+          <div class="month-selector">
+            <button class="month-btn" id="prevMonth">‹</button>
+            <span class="month-label" id="monthLabel">Junho 2026</span>
+            <button class="month-btn" id="nextMonth">›</button>
+          </div>
+          <div class="user-info-top">
+            <span class="user-email-top" id="userEmailTop"></span>
+            <div class="avatar" id="userAvatar">AR</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- TAB: VISÃO GERAL -->
+      <section class="tab-content active" id="tab-overview">
+        <div class="kpi-grid" id="kpiGridOverview">
+          <div class="kpi-card saldo" id="kpi-saldo">
+            <div class="kpi-header">
+              <span class="kpi-label">Saldo Atual</span>
+              <span class="kpi-icon">💰</span>
+            </div>
+            <div class="kpi-value" id="kpi-saldo-value">R$ 0,00</div>
+            <div class="kpi-sub" id="kpi-saldo-sub">Receita – Gasto</div>
+            <div class="kpi-bar"><div class="kpi-bar-fill saldo-fill" id="kpi-saldo-bar"></div></div>
+          </div>
+          <div class="kpi-card receita">
+            <div class="kpi-header">
+              <span class="kpi-label">Total Recebido</span>
+              <span class="kpi-icon">📈</span>
+            </div>
+            <div class="kpi-value" id="kpi-income-value">R$ 0,00</div>
+            <div class="kpi-sub" id="kpi-income-sub">0 lançamentos</div>
+            <div class="kpi-bar"><div class="kpi-bar-fill receita-fill" id="kpi-income-bar" style="width:100%"></div></div>
+          </div>
+          <div class="kpi-card gasto">
+            <div class="kpi-header">
+              <span class="kpi-label">Total Gasto</span>
+              <span class="kpi-icon">📉</span>
+            </div>
+            <div class="kpi-value" id="kpi-expense-value">R$ 0,00</div>
+            <div class="kpi-sub" id="kpi-expense-sub">0 lançamentos</div>
+            <div class="kpi-bar"><div class="kpi-bar-fill gasto-fill" id="kpi-expense-bar" style="width:0%"></div></div>
+          </div>
+          <div class="kpi-card economia">
+            <div class="kpi-header">
+              <span class="kpi-label">Taxa de Poupança</span>
+              <span class="kpi-icon">🏦</span>
+            </div>
+            <div class="kpi-value" id="kpi-savings-value">0%</div>
+            <div class="kpi-sub">do total recebido</div>
+            <div class="kpi-bar"><div class="kpi-bar-fill economia-fill" id="kpi-savings-bar" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="charts-row">
+          <div class="chart-card wide">
+            <div class="chart-card-header">
+              <h3>Receitas vs Gastos</h3>
+              <div class="chart-legend">
+                <span class="legend-dot green"></span>Receitas
+                <span class="legend-dot red"></span>Gastos
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="incomeExpenseChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>Distribuição de Gastos</h3>
+            </div>
+            <div class="chart-wrapper donut-wrapper">
+              <canvas id="expenseDonutChart"></canvas>
+            </div>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+        </div>
+
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>Evolução do Saldo</h3>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="balanceEvolutionChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>Gastos por Categoria</h3>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="categoryBarChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: ANÁLISE SEMANAL -->
+      <section class="tab-content" id="tab-weekly">
+        <div class="section-header">
+          <h2>📅 Análise Semanal</h2>
+          <div class="week-selector">
+            <select id="weekSelect" class="filter-select">
+              <option value="1">Semana 1</option>
+              <option value="2">Semana 2</option>
+              <option value="3">Semana 3</option>
+              <option value="4">Semana 4</option>
+            </select>
+            <span class="week-range-label" id="weekRangeLabel">—</span>
+          </div>
+        </div>
+
+        <div class="kpi-grid three-col">
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Total Gasto na Semana</span><span class="kpi-icon">📉</span></div>
+            <div class="kpi-value" id="weekly-expense">R$ 0,00</div>
+            <div class="kpi-sub" id="weekly-expense-count">0 transações</div>
+          </div>
+          <div class="kpi-card receita">
+            <div class="kpi-header"><span class="kpi-label">Total Recebido na Semana</span><span class="kpi-icon">📈</span></div>
+            <div class="kpi-value" id="weekly-income">R$ 0,00</div>
+            <div class="kpi-sub" id="weekly-income-count">0 transações</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Saldo da Semana</span><span class="kpi-icon">💰</span></div>
+            <div class="kpi-value" id="weekly-balance">R$ 0,00</div>
+            <div class="kpi-sub" id="weekly-balance-diff">—</div>
+          </div>
+        </div>
+
+        <div class="insight-cards" id="weeklyInsights"></div>
+
+        <div class="chart-card full-width">
+          <div class="chart-card-header">
+            <h3>Receitas vs Gastos por Dia da Semana</h3>
+            <div class="chart-legend">
+              <span class="legend-dot green"></span>Receitas
+              <span class="legend-dot red"></span>Gastos
+            </div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="weeklyDayChart"></canvas>
+          </div>
+        </div>
+
+        <div class="weekly-charts-bottom">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>Distribuição de Gastos na Semana</h3>
+            </div>
+            <div class="chart-wrapper donut-wrapper">
+              <canvas id="weeklyCatDonut"></canvas>
+            </div>
+            <div class="donut-legend" id="weeklyCatLegend"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>Distribuição de Receitas na Semana</h3>
+            </div>
+            <div class="chart-wrapper donut-wrapper">
+              <canvas id="weeklyIncDonut"></canvas>
+            </div>
+            <div class="donut-legend" id="weeklyIncLegend"></div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <h3>📋 Transações da Semana</h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="weeklyTable">
+              <thead><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Categoria</th><th>Valor</th></tr></thead>
+              <tbody id="weeklyTableBody"><tr class="empty-row"><td colspan="5">Nenhuma transação nesta semana.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: ANÁLISE ANUAL -->
+      <section class="tab-content" id="tab-annual">
+        <div class="section-header">
+          <h2>📆 Análise Anual</h2>
+          <div class="year-selector">
+            <button class="month-btn" id="prevYear">‹</button>
+            <span class="month-label" id="yearLabel">2026</span>
+            <button class="month-btn" id="nextYear">›</button>
+          </div>
+        </div>
+
+        <div class="kpi-grid four-col">
+          <div class="kpi-card saldo">
+            <div class="kpi-header"><span class="kpi-label">Saldo do Ano</span><span class="kpi-icon">💰</span></div>
+            <div class="kpi-value" id="annual-balance">R$ 0,00</div>
+            <div class="kpi-sub" id="annual-balance-sub">Acumulado</div>
+          </div>
+          <div class="kpi-card receita">
+            <div class="kpi-header"><span class="kpi-label">Total Receitas</span><span class="kpi-icon">📈</span></div>
+            <div class="kpi-value" id="annual-income">R$ 0,00</div>
+            <div class="kpi-sub" id="annual-income-count">12 meses</div>
+          </div>
+          <div class="kpi-card gasto">
+            <div class="kpi-header"><span class="kpi-label">Total Despesas</span><span class="kpi-icon">📉</span></div>
+            <div class="kpi-value" id="annual-expense">R$ 0,00</div>
+            <div class="kpi-sub" id="annual-expense-count">12 meses</div>
+          </div>
+          <div class="kpi-card economia">
+            <div class="kpi-header"><span class="kpi-label">Taxa de Poupança</span><span class="kpi-icon">🏦</span></div>
+            <div class="kpi-value" id="annual-savings">0%</div>
+            <div class="kpi-sub">do ano</div>
+          </div>
+        </div>
+
+        <div class="chart-card full-width">
+          <div class="chart-card-header">
+            <h3>Comparativo Mensal – Receitas vs Gastos</h3>
+          </div>
+          <div class="chart-wrapper tall-chart">
+            <canvas id="annualCompareChart"></canvas>
+          </div>
+        </div>
+
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>Evolução do Saldo Mensal</h3>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="annualBalanceChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>Despesa por Categoria (Ano)</h3>
+            </div>
+            <div class="chart-wrapper donut-wrapper">
+              <canvas id="annualCategoryChart"></canvas>
+            </div>
+            <div class="donut-legend" id="annualCatLegend"></div>
+          </div>
+        </div>
+
+        <div class="insight-cards" id="annualInsights"></div>
+      </section>
+
+      <!-- TAB: RECEBIMENTOS -->
+      <section class="tab-content" id="tab-income">
+        <div class="section-header">
+          <h2>💵 Recebimentos</h2>
+          <button class="btn-primary" onclick="openModal('income')">+ Novo Recebimento</button>
+        </div>
+        <div class="kpi-grid two-col">
+          <div class="kpi-card receita">
+            <div class="kpi-header"><span class="kpi-label">Total no Mês</span><span class="kpi-icon">📈</span></div>
+            <div class="kpi-value" id="income-total">R$ 0,00</div>
+            <div class="kpi-sub" id="income-count">0 lançamentos</div>
+          </div>
+          <div class="kpi-card economia">
+            <div class="kpi-header"><span class="kpi-label">Maior Entrada</span><span class="kpi-icon">🎯</span></div>
+            <div class="kpi-value" id="income-max">R$ 0,00</div>
+            <div class="kpi-sub" id="income-max-label">—</div>
+          </div>
+        </div>
+        <div class="chart-card full-width">
+          <div class="chart-card-header"><h3>Recebimentos por Categoria</h3></div>
+          <div class="chart-wrapper"><canvas id="incomeCategoryChart"></canvas></div>
+        </div>
+        <div class="chart-card full-width">
+          <div class="chart-card-header"><h3>Histórico de Entradas</h3></div>
+          <div class="chart-wrapper"><canvas id="incomeHistoryChart"></canvas></div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header"><h3>Lançamentos</h3></div>
+          <div class="table-wrapper">
+            <table class="data-table" id="incomeTable">
+              <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Ação</th></tr></thead>
+              <tbody id="incomeTableBody"><tr class="empty-row"><td colspan="5">Nenhum recebimento cadastrado.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: GASTOS -->
+      <section class="tab-content" id="tab-expenses">
+        <div class="section-header">
+          <h2>💸 Gastos</h2>
+          <button class="btn-primary" onclick="openModal('expense')">+ Novo Gasto</button>
+        </div>
+        <div class="kpi-grid four-col">
+          <div class="kpi-card mercado">
+            <div class="kpi-header"><span class="kpi-label">Mercado</span><span class="kpi-icon">🛒</span></div>
+            <div class="kpi-value" id="exp-mercado">R$ 0,00</div>
+          </div>
+          <div class="kpi-card pessoal-card">
+            <div class="kpi-header"><span class="kpi-label">Pessoal</span><span class="kpi-icon">👤</span></div>
+            <div class="kpi-value" id="exp-pessoal">R$ 0,00</div>
+          </div>
+          <div class="kpi-card contas-card">
+            <div class="kpi-header"><span class="kpi-label">Contas</span><span class="kpi-icon">📋</span></div>
+            <div class="kpi-value" id="exp-contas">R$ 0,00</div>
+          </div>
+          <div class="kpi-card trabalho-card">
+            <div class="kpi-header"><span class="kpi-label">Trabalho</span><span class="kpi-icon">💼</span></div>
+            <div class="kpi-value" id="exp-trabalho">R$ 0,00</div>
+          </div>
+        </div>
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-card-header"><h3>Gastos por Categoria</h3></div>
+            <div class="chart-wrapper donut-wrapper"><canvas id="expCategoryDonut"></canvas></div>
+          </div>
+          <div class="chart-card wide">
+            <div class="chart-card-header"><h3>Evolução dos Gastos</h3></div>
+            <div class="chart-wrapper"><canvas id="expEvolutionChart"></canvas></div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-card-header">
+            <h3>Lançamentos de Gastos</h3>
+            <div class="filter-group">
+              <select id="filterCategory" class="filter-select">
+                <option value="">Todas as categorias</option>
+                <option value="mercado">Mercado</option>
+                <option value="pessoal">Pessoal</option>
+                <option value="contas">Contas</option>
+                <option value="trabalho">Trabalho</option>
+                <option value="outros">Outros</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table" id="expenseTable">
+              <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Ação</th></tr></thead>
+              <tbody id="expenseTableBody"><tr class="empty-row"><td colspan="5">Nenhum gasto cadastrado.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: BALANÇO -->
+      <section class="tab-content" id="tab-balance">
+        <div class="section-header"><h2>⚖️ Balanço Financeiro</h2></div>
+        <div class="kpi-grid three-col">
+          <div class="kpi-card receita">
+            <div class="kpi-header"><span class="kpi-label">Receitas</span><span class="kpi-icon">📈</span></div>
+            <div class="kpi-value" id="bal-income">R$ 0,00</div>
+          </div>
+          <div class="kpi-card gasto">
+            <div class="kpi-header"><span class="kpi-label">Despesas</span><span class="kpi-icon">📉</span></div>
+            <div class="kpi-value" id="bal-expense">R$ 0,00</div>
+          </div>
+          <div class="kpi-card saldo" id="bal-saldo-card">
+            <div class="kpi-header"><span class="kpi-label">Saldo Líquido</span><span class="kpi-icon">💰</span></div>
+            <div class="kpi-value" id="bal-saldo">R$ 0,00</div>
+          </div>
+        </div>
+        <div class="charts-row">
+          <div class="chart-card wide">
+            <div class="chart-card-header"><h3>Balanço Mensal – Receitas × Despesas</h3></div>
+            <div class="chart-wrapper"><canvas id="balanceBarChart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header"><h3>Proporção Receitas / Gastos</h3></div>
+            <div class="chart-wrapper donut-wrapper"><canvas id="balancePieChart"></canvas></div>
+          </div>
+        </div>
+        <div class="chart-card full-width">
+          <div class="chart-card-header"><h3>Saldo Acumulado ao Longo do Tempo</h3></div>
+          <div class="chart-wrapper tall-chart"><canvas id="cumulativeBalanceChart"></canvas></div>
+        </div>
+        <div class="insight-cards" id="insightCards"></div>
+      </section>
+
+      <!-- TAB: HISTÓRICO -->
+      <section class="tab-content" id="tab-history">
+        <div class="section-header">
+          <h2>📋 Histórico Completo</h2>
+          <div class="header-actions">
+            <button class="btn-secondary" id="exportBtn">📤 Exportar CSV</button>
+            <button class="btn-secondary" id="exportPdfBtn">📄 Exportar PDF</button>
+            <button class="btn-danger" id="clearAllBtn">🗑 Limpar Tudo</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="🔍  Buscar por descrição..." class="search-input" />
+        </div>
+        <div class="table-card">
+          <div class="table-wrapper">
+            <table class="data-table" id="historyTable">
+              <thead><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Categoria</th><th>Valor</th><th>Ação</th></tr></thead>
+              <tbody id="historyTableBody"><tr class="empty-row"><td colspan="6">Nenhum lançamento ainda.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: METAS -->
+      <section class="tab-content" id="tab-budget">
+        <div class="section-header">
+          <h2>🎯 Metas e Orçamento</h2>
+          <button class="btn-primary" id="saveBudgetBtn">💾 Salvar Metas</button>
+        </div>
+        <div class="kpi-grid three-col">
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Meta de Gastos Mensal</span><span class="kpi-icon">📉</span></div>
+            <div class="budget-input-group">
+              <input type="number" id="budgetExpenseLimit" class="budget-input" value="3000" />
+              <span class="budget-label">/mês</span>
+            </div>
+            <div class="kpi-sub" id="budgetExpenseUsed">Usado: R$ 0,00</div>
+            <div class="kpi-bar"><div class="kpi-bar-fill gasto-fill" id="budgetExpenseBar" style="width:0%"></div></div>
+          </div>
+          <div class="kpi-card receita">
+            <div class="kpi-header"><span class="kpi-label">Meta de Poupança</span><span class="kpi-icon">🏦</span></div>
+            <div class="budget-input-group">
+              <input type="number" id="budgetSavingsGoal" class="budget-input" value="20" />
+              <span class="budget-label">%</span>
+            </div>
+            <div class="kpi-sub" id="budgetSavingsCurrent">Atual: 0%</div>
+            <div class="kpi-bar"><div class="kpi-bar-fill economia-fill" id="budgetSavingsBar" style="width:0%"></div></div>
+          </div>
+          <div class="kpi-card saldo">
+            <div class="kpi-header"><span class="kpi-label">Reserva de Emergência</span><span class="kpi-icon">🛡️</span></div>
+            <div class="kpi-value" id="emergencyReserve">R$ 0,00</div>
+            <div class="kpi-sub" id="emergencyGoal">Meta: R$ 10.000,00</div>
+            <div class="kpi-bar"><div class="kpi-bar-fill saldo-fill" id="emergencyBar" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="chart-card full-width">
+          <div class="chart-card-header"><h3>Progresso do Orçamento por Categoria</h3></div>
+          <div class="chart-wrapper"><canvas id="budgetProgressChart"></canvas></div>
+        </div>
+        <div class="budget-categories" id="budgetCategories">
+          <h3>Metas por Categoria</h3>
+          <div class="budget-cat-list" id="budgetCatList"></div>
+        </div>
+      </section>
+
+      <!-- TAB: CARTÃO -->
+      <section class="tab-content" id="tab-card">
+        <div class="section-header">
+          <h2>💳 Cartão de Crédito</h2>
+          <button class="btn-primary" onclick="openCardModal()">+ Novo Cartão</button>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid"></div>
+
+        <div class="section-header" style="margin-top:32px">
+          <h2>📦 Compras Parceladas</h2>
+          <button class="btn-primary" onclick="openInstallmentModal()">+ Nova Parcela</button>
+        </div>
+
+        <div class="table-card">
+          <div class="table-wrapper">
+            <table class="data-table" id="installmentTable">
+              <thead><tr><th>Descrição</th><th>Cartão</th><th>Total</th><th>Parcelas</th><th>Progresso</th><th>Ação</th></tr></thead>
+              <tbody id="installmentTableBody"><tr class="empty-row"><td colspan="6">Nenhuma compra parcelada.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section-header" style="margin-top:32px">
+          <h2>📅 Pagamentos Agendados</h2>
+          <button class="btn-primary" onclick="openScheduledModal()">+ Novo Agendamento</button>
+        </div>
+
+        <div class="table-card">
+          <div class="table-wrapper">
+            <table class="data-table" id="scheduledTable">
+              <thead><tr><th>Descrição</th><th>Valor</th><th>Frequência</th><th>Próximo</th><th>Status</th><th>Ação</th></tr></thead>
+              <tbody id="scheduledTableBody"><tr class="empty-row"><td colspan="6">Nenhum pagamento agendado.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL: ADD DATA -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Adicionar Lançamento</h2>
+        <button class="modal-close" id="closeModalBtn">✕</button>
+      </div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" id="modalTabIncome" onclick="setModalType('income')">💵 Recebimento</button>
+        <button class="modal-tab" id="modalTabExpense" onclick="setModalType('expense')">💸 Gasto</button>
+      </div>
+      <form id="transactionForm" class="modal-form">
+        <div class="form-group">
+          <label for="txDate">Data</label>
+          <input type="date" id="txDate" required />
+        </div>
+        <div class="form-group">
+          <label for="txDesc">Descrição</label>
+          <input type="text" id="txDesc" placeholder="Ex: Salário, Supermercado..." required />
+        </div>
+        <div class="form-group" id="incomeCatGroup">
+          <label for="txIncomeCategory">Categoria (Receita)</label>
+          <select id="txIncomeCategory">
+            <option value="salario">Salário</option>
+            <option value="freelance">Freelance</option>
+            <option value="investimento">Investimento</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+        <div class="form-group" id="expenseCatGroup" style="display:none">
+          <label for="txExpenseCategory">Categoria (Gasto)</label>
+          <select id="txExpenseCategory">
+            <option value="mercado">Mercado 🛒</option>
+            <option value="pessoal">Pessoal 👤</option>
+            <option value="contas">Contas 📋</option>
+            <option value="trabalho">Trabalho 💼</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="txValue">Valor (R$)</label>
+          <input type="number" id="txValue" placeholder="0,00" step="0.01" min="0.01" required />
+        </div>
+        <div class="form-group">
+          <label for="txNote">Observação (opcional)</label>
+          <input type="text" id="txNote" placeholder="Adicione uma nota..." />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+          <button type="submit" class="btn-primary" id="submitBtn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: IMPORT CSV -->
+  <div class="modal-overlay" id="csvModalOverlay">
+    <div class="modal" id="csvModal">
+      <div class="modal-header">
+        <h2>📥 Importar Dados CSV</h2>
+        <button class="modal-close" id="closeCsvModalBtn">✕</button>
+      </div>
+      <div class="modal-form">
+        <div class="form-group">
+          <label>Arquivo CSV</label>
+          <input type="file" id="csvFileInput" accept=".csv" />
+        </div>
+        <div class="csv-help">
+          <p>Formato esperado:</p>
+          <code>data,descricao,tipo,categoria,valor</code>
+          <p>Exemplo:</p>
+          <code>2026-06-15,Salario,salario,receita,5000</code>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelCsvBtn">Cancelar</button>
+          <button type="button" class="btn-primary" id="importCsvConfirmBtn">Importar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: NOVO CARTÃO -->
+  <div class="modal-overlay" id="cardModalOverlay">
+    <div class="modal" id="cardModal">
+      <div class="modal-header">
+        <h2>💳 Novo Cartão de Crédito</h2>
+        <button class="modal-close" id="closeCardModalBtn">✕</button>
+      </div>
+      <form id="cardForm" class="modal-form">
+        <div class="form-group">
+          <label for="cardName">Nome do Cartão</label>
+          <input type="text" id="cardName" placeholder="Ex: Nubank, Inter..." required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cardClosingDay">Dia Fechamento</label>
+            <input type="number" id="cardClosingDay" placeholder="15" min="1" max="31" required />
+          </div>
+          <div class="form-group">
+            <label for="cardDueDay">Dia Vencimento</label>
+            <input type="number" id="cardDueDay" placeholder="22" min="1" max="31" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cardLimit">Limite Total (R$)</label>
+          <input type="number" id="cardLimit" placeholder="5000" min="0" step="100" required />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelCardBtn">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar Cartão</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NOVA PARCELA -->
+  <div class="modal-overlay" id="installmentModalOverlay">
+    <div class="modal" id="installmentModal">
+      <div class="modal-header">
+        <h2>📦 Nova Compra Parcelada</h2>
+        <button class="modal-close" id="closeInstallmentModalBtn">✕</button>
+      </div>
+      <form id="installmentForm" class="modal-form">
+        <div class="form-group">
+          <label for="instDesc">Descrição</label>
+          <input type="text" id="instDesc" placeholder="Ex: Notebook, Sofá..." required />
+        </div>
+        <div class="form-group">
+          <label for="instCard">Cartão</label>
+          <select id="instCard">
+            <option value="">Nenhum (gasto normal)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="instTotal">Valor Total (R$)</label>
+            <input type="number" id="instTotal" placeholder="1200" min="0.01" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label for="instCount">Nº de Parcelas</label>
+            <input type="number" id="instCount" placeholder="12" min="1" max="120" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="instDate">Data da Primeira Parcela</label>
+          <input type="date" id="instDate" required />
+        </div>
+        <div class="form-group">
+          <label for="instCategory">Categoria</label>
+          <select id="instCategory">
+            <option value="mercado">Mercado 🛒</option>
+            <option value="pessoal">Pessoal 👤</option>
+            <option value="contas">Contas 📋</option>
+            <option value="trabalho">Trabalho 💼</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="instNote">Observação (opcional)</label>
+          <input type="text" id="instNote" placeholder="Adicione uma nota..." />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelInstallmentBtn">Cancelar</button>
+          <button type="submit" class="btn-primary">Criar Parcelas</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NOVO AGENDAMENTO -->
+  <div class="modal-overlay" id="scheduledModalOverlay">
+    <div class="modal" id="scheduledModal">
+      <div class="modal-header">
+        <h2>📅 Novo Pagamento Agendado</h2>
+        <button class="modal-close" id="closeScheduledModalBtn">✕</button>
+      </div>
+      <form id="scheduledForm" class="modal-form">
+        <div class="form-group">
+          <label for="schedDesc">Descrição</label>
+          <input type="text" id="schedDesc" placeholder="Ex: Aluguel, Internet..." required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schedValue">Valor (R$)</label>
+            <input type="number" id="schedValue" placeholder="1500" min="0.01" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label for="schedFrequency">Frequência</label>
+            <select id="schedFrequency">
+              <option value="monthly">Mensal</option>
+              <option value="weekly">Semanal</option>
+              <option value="biweekly">Quinzenal</option>
+              <option value="yearly">Anual</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="schedCategory">Categoria</label>
+          <select id="schedCategory">
+            <option value="contas">Contas 📋</option>
+            <option value="mercado">Mercado 🛒</option>
+            <option value="pessoal">Pessoal 👤</option>
+            <option value="trabalho">Trabalho 💼</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="schedStart">Data Início</label>
+            <input type="date" id="schedStart" required />
+          </div>
+          <div class="form-group">
+            <label for="schedEnd">Data Fim (opcional)</label>
+            <input type="date" id="schedEnd" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="schedNote">Observação (opcional)</label>
+          <input type="text" id="schedNote" placeholder="Adicione uma nota..." />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelScheduledBtn">Cancelar</button>
+          <button type="submit" class="btn-primary">Criar Agendamento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('PWA: Service Worker registrado com sucesso!', reg.scope))
+          .catch(err => console.log('PWA: Erro ao registrar Service Worker', err));
+      });
+
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('PWA: Pronto para instalar');
+        
+        // Show install button after 2 seconds
+        setTimeout(() => {
+          showInstallPrompt();
+        }, 2000);
+      });
+      
+      window.addEventListener('appinstalled', () => {
+        console.log('PWA: App instalado com sucesso!');
+        showToast('PoupaCerto instalado com sucesso! 🎉', 'success');
+      });
+      
+      function showInstallPrompt() {
+        // Only show if not installed yet
+        if (deferredPrompt) {
+          const installBtn = document.createElement('button');
+          installBtn.id = 'pwa-install-btn';
+          installBtn.className = 'btn-primary';
+          installBtn.id = 'pwa-install-btn';
+          installBtn.innerHTML = '⭐ Instalar PoupaCerto';
+          document.body.appendChild(installBtn);
+          
+          installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+              deferredPrompt.prompt();
+              const result = await deferredPrompt.userChoice;
+              if (result.outcome === 'accepted') {
+                console.log('PWA: Usuário aceitou instalação');
+              }
+              deferredPrompt = null;
+              installBtn.remove();
+            }
+          });
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+{
+  "name": "PoupaCerto",
+  "short_name": "PoupaCerto",
+  "description": "Gerencie suas finanças pessoais com dashboards interativos",
+  "start_url": "finanças.html",
+  "scope": ".",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "orientation": "portrait-primary",
+  "theme_color": "#0f0f23",
+  "background_color": "#0f0f23",
+  "categories": [
+    "finance",
+    "productivity",
+    "utilities"
+  ],
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "Visão Geral",
+      "short_name": "Resumo",
+      "description": "Ver visão geral financeira",
+      "url": "finanças.html#tab-overview"
+    },
+    {
+      "name": "Adicionar Lançamento",
+      "short_name": "Novo",
+      "description": "Adicionar receita ou despesa",
+      "url": "finanças.html#add-transaction"
+    },
+    {
+      "name": "Metas",
+      "short_name": "Metas",
+      "description": "Gerenciar metas financeiras",
+      "url": "finanças.html#tab-budget"
+    }
+  ]
+}

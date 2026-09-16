@@ -1,0 +1,3 @@
+<!DOCTYPE html>
+<!-- teste com acentos: finanças, R$, 💰 e aspas "duplas" -->
+</html>
